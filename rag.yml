@@ -2,11 +2,11 @@ version: '3.8'
 
 services:
   vectordb:
-    image: pgvector/pgvector:0.8.0-pg15-trixie
+    image: my-pgvector-pg18
     environment:
-      POSTGRES_DB: mydatabase
-      POSTGRES_USER: myuser
-      POSTGRES_PASSWORD: mypassword
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: rm6q65wk
     volumes:
       - pgdata2:/var/lib/postgresql/data
     ports:
@@ -17,7 +17,7 @@ services:
     environment:
       - DB_HOST=vectordb
       - DB_PORT=5432
-      - POSTGRES_DB=mydatabase
+      - POSTGRES_DB=postgres
       - POSTGRES_USER=myuser
       - POSTGRES_PASSWORD=mypassword
     ports:
