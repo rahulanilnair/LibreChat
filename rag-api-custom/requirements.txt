@@ -6,5 +6,10 @@ langchain-core
 langchain-openai
 langchain-community
 langchain-postgres
-psycopg2-binary
 pydantic_ai
+flashrank
+langchain-ollama
+pydantic
+typing
+psycopg
+sqlalchemy

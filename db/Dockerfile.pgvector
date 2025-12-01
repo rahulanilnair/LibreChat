@@ -1,0 +1,21 @@
+FROM postgres:18
+
+RUN apt-get update && apt-get install -y \
+    build-essential \
+    postgresql-server-dev-18 \
+    git \
+    make \
+    --no-install-recommends 
+
+RUN apt-get install -y --reinstall ca-certificates
+RUN update-ca-certificates
+RUN rm -rf /var/lib/apt/lists/*
+
+
+ARG PGVECTOR_VERSION=v0.8.1
+RUN git clone --branch ${PGVECTOR_VERSION} https://github.com/pgvector/pgvector.git /usr/src/pgvector
+
+WORKDIR /usr/src/pgvector
+RUN make && make install
+
+RUN rm -rf /usr/src/pgvector

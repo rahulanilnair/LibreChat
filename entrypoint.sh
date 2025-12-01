@@ -1,20 +1,26 @@
 #!/bin/bash
-set -e
-echo "Starting Ollama server"
+
+# 1. Start Ollama in the background.
 /bin/ollama serve &
+pid=$!
 
-OLLAMA_PID=$!
+# 2. Wait for Ollama to wake up.
+echo "🔴 Waiting for Ollama to start..."
 
-echo "Waiting for ollama to be ready"
-while ! ollama list | grep -q 'NAME';do
+# We use 'ollama list' to check if the server is responding.
+# If the server is down, this command will fail (exit code 1).
+while ! ollama list > /dev/null 2>&1; do
     sleep 1
 done
 
-echo "Pulling models : nomic-embed-text and llama3"
+echo "🟢 Ollama is running!"
+
+# 3. Pull the models.
+echo "⬇️  Pulling nomic-embed-text..."
 ollama pull nomic-embed-text
-ollama pull llama3
 
-echo "✅ Ollama models are ready!"
+echo "⬇️  Pulling llama3..."
+ollama pull llama3.2
 
-# Wait for the background process (ollama serve) to keep the container alive
-wait $OLLAMA_PID
+# 4. Wait for the server process to finish (keeps the container alive).
+wait $pid
