@@ -107,7 +107,7 @@ async def ingest_documents(file_path: str):
     try:
         loader=TextLoader(file_path)
         documents=loader.load()
-        text_splitter=RecursiveCharacterTextSplitter(chunk_size=15000,chunk_overlap=1000)
+        text_splitter=RecursiveCharacterTextSplitter(chunk_size=1500,chunk_overlap=100)
         chunks=text_splitter.split_documents(documents)
         vector_store.add_documents(chunks)
         return {"status": "success", "message": f"Successfully indexed {len(chunks)} chunks."}
